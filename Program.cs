@@ -1,6 +1,13 @@
+using AccountingSystemApi.Repository;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<AppDbContext>(opt =>
+            opt.UseInMemoryDatabase("InMem"));
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,5 +28,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+DummyData.DataPopulation(app);
 
 app.Run();
