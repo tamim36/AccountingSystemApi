@@ -12,9 +12,9 @@ namespace AccountingSystemApi.Repository
             _dbContext = dbContext;
         }
 
-        public Task GetTransactionById(int id)
+        public async Task<Transaction> GetTransactionById(int id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Transactions.FirstOrDefaultAsync(x => x.TransactionId == id);
         }
 
         public async Task InsertTransaction(Transaction transaction)
@@ -28,14 +28,28 @@ namespace AccountingSystemApi.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task UpdateTransaction(Transaction transaction)
+        public async Task UpdateTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            var existingTransaction = await GetTransactionById(transaction.TransactionId);
+            if (existingTransaction != null)
+            {
+                existingTransaction.Description = transaction.Description;
+                existingTransaction.Amount = transaction.Amount;
+                
+                _dbContext.Transactions.Update(existingTransaction);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<Transaction>> GetAllTransactions()
         {
             return await _dbContext.Transactions.ToListAsync();
+        }
+
+        public async Task DeleteTransaction(Transaction transaction)
+        {
+            _dbContext.Transactions.Remove(transaction);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

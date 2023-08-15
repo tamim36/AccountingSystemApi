@@ -6,9 +6,11 @@ namespace AccountingSystemApi.Repository
     {
         Task InsertTransaction(Transaction transaction);
 
+        Task DeleteTransaction(Transaction transaction);
+
         Task UpdateTransaction(Transaction transaction);
 
-        Task GetTransactionById(int id);
+        Task<Transaction> GetTransactionById(int id);
 
         Task<IEnumerable<Transaction>> GetAllTransactions();
     }
