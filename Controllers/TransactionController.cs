@@ -1,8 +1,5 @@
-﻿using AccountingSystemApi.Domain;
-using AccountingSystemApi.Repository;
-using Microsoft.AspNetCore.Http;
+﻿using AccountingSystemApi.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
 namespace AccountingSystemApi.Controllers
